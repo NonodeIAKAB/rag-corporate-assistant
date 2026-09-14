@@ -1,5 +1,10 @@
 # Assistant documentaire RAG
 
+![Python](https://img.shields.io/badge/Python-3.11%20%2F%203.12-1999D4?style=flat-square)
+![License](https://img.shields.io/badge/Licence-MIT-1999D4?style=flat-square)
+![LLM](https://img.shields.io/badge/LLM-Groq%20%C2%B7%20gpt--oss--120b-1999D4?style=flat-square)
+![Status](https://img.shields.io/badge/Statut-Portfolio%20v1-4F5468?style=flat-square)
+
 Assistant conversationnel qui répond à des questions sur un document
 d'entreprise (rapport, manuel, procédure...) en citant ses sources —
 architecture Retrieval-Augmented Generation, inspirée des cas d'usage
@@ -10,6 +15,10 @@ qu'on trouve chez un industriel (finance, conformité, sécurité).
 > de dérouler le PDF à la main. Voir la feuille de route complète du
 > projet (choix du corpus, évaluation, présentation) dans le guide fourni
 > à côté de ce dépôt.
+
+> **Note** : ce projet est une démonstration personnelle, non affiliée à
+> Safran. Il utilise le Document d'Enregistrement Universel 2025 de
+> Safran (public, librement téléchargeable) comme corpus de test.
 
 ## Architecture
 
@@ -36,8 +45,13 @@ reranking, puis génération par le LLM à partir des seuls extraits retenus.
 
 ## Stack technique
 
-`langchain` · `langchain-groq` · `langchain-huggingface` · `faiss-cpu` ·
-`sentence-transformers` · `rank_bm25` · `streamlit`
+![LangChain](https://img.shields.io/badge/-LangChain-1999D4?style=flat-square)
+![Groq](https://img.shields.io/badge/-langchain--groq-1999D4?style=flat-square)
+![HuggingFace](https://img.shields.io/badge/-langchain--huggingface-1999D4?style=flat-square)
+![FAISS](https://img.shields.io/badge/-faiss--cpu-4F5468?style=flat-square)
+![Sentence Transformers](https://img.shields.io/badge/-sentence--transformers-4F5468?style=flat-square)
+![BM25](https://img.shields.io/badge/-rank__bm25-4F5468?style=flat-square)
+![Streamlit](https://img.shields.io/badge/-Streamlit-4F5468?style=flat-square)
 
 ## Lancer en local (VSCode)
 
