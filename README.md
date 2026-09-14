@@ -13,23 +13,12 @@ qu'on trouve chez un industriel (finance, conformité, sécurité).
 
 ## Architecture
 
-```
-data/raw/*.pdf,.docx,.txt
-        │  rag/ingest.py  (parsing + chunking)
-        ▼
-    chunks (texte + métadonnées source/page)
-        │  rag/index.py  (embeddings locaux + FAISS + chunks.pkl)
-        ▼
-    data/index/  (index vectoriel + chunks persistants)
-        │
-        │  question utilisateur
-        ▼
-    rag/retriever.py  (BM25 + FAISS en parallèle → reranking cross-encoder)
-        ▼
-    rag/chain.py  (top-k reranké → prompt strict → LLM Groq)
-        ▼
-    réponse + sources citées  →  app.py (Streamlit)
-```
+![Anatomie du RAG — architecture de l'assistant documentaire](docs/architecture.png)
+
+Deux temps : l'**indexation** (en haut) ne tourne qu'une fois — le document
+est découpé, vectorisé et rangé dans FAISS. L'**interrogation** (en bas)
+tourne à chaque question — recherche hybride (mots-clés + sémantique),
+reranking, puis génération par le LLM à partir des seuls extraits retenus.
 
 - **Embeddings** : `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`,
   local et gratuit (pas de clé API pour cette étape).
@@ -40,8 +29,9 @@ data/raw/*.pdf,.docx,.txt
   — voir `rag/retriever.py`. Nécessaire sur un document dense où plusieurs
   passages se ressemblent lexicalement (ex. plusieurs fiches biographiques
   avec la même structure).
-- **LLM** : Groq, configurable via `.env` (`GROQ_MODEL`), gratuit en usage
-  modéré, très rapide — idéal pour une démo réactive.
+- **LLM** : Groq — `openai/gpt-oss-120b` par défaut, configurable via `.env`
+  (`GROQ_MODEL`), gratuit en usage modéré, très rapide — idéal pour une
+  démo réactive.
 - **Interface** : Streamlit, chat avec affichage des sources par réponse.
 
 ## Stack technique
@@ -66,7 +56,7 @@ data/raw/*.pdf,.docx,.txt
    pip install --upgrade pip
    pip install -r requirements.txt
    ```
-3. Copie `.env.example` en `.env` et colle ta clé Groq gratuite
+3. Copie `.env` et colle ta clé Groq gratuite
    (https://console.groq.com/keys).
 4. Décompresse ton zip de documents dans `data/raw/` (PDF, DOCX ou TXT).
 5. Construis l'index :
